@@ -1,5 +1,6 @@
 import Navbar from "../components/NavBar";
 import { useState } from "react";   
+import axios from "axios";
  
 function NewBeer() {
   const [name, setName] = useState("");   
@@ -10,12 +11,28 @@ function NewBeer() {
   const [attenuationLevel, setAttenuationLevel] = useState("");  
   const [contributedBy, setContributedBy] = useState("");  
 
+  function handleSubmit (e){
+    e.preventDefault()
+    const newBeer = {name, tagline, description,firstBrewed,brewersTips,attenuationLevel,contributedBy}
+    axios.post('https://ih-beers-api2.herokuapp.com/beers/new',newBeer)
+    .then(()=>{
+      setName("")
+      setTagline("")
+      setDescription("")
+      setFirstBrewed("")
+      setBrewersTips("")
+      setAttenuationLevel("")
+      setContributedBy("")
+
+    })
+  }
+
 
     return (
       <div className="new-beer"> 
       <Navbar/>
       <h1>New beer</h1>
-      <form  >
+      <form action="" onSubmit={handleSubmit} >
         <label>Name</label>
         <input
           type="text"
